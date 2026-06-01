@@ -15,8 +15,8 @@
             --text-dim: #94a3b8;
             --border: #334155;
             --accent: #818cf8;
-            --code-bg: #1e293b;
-            --gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+            --success: #22c55e;
+            --code-bg: #0f172a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,20 +28,18 @@
             line-height: 1.8;
         }
 
-        /* ─── 导航 ─── */
         nav {
             position: fixed; top: 0; width: 100%; z-index: 100;
             background: var(--bg-nav);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border);
-            padding: 0 2rem;
-            height: 64px;
+            padding: 0 2rem; height: 64px;
             display: flex; align-items: center; gap: 2rem;
             overflow-x: auto;
         }
         nav .logo {
             font-size: 1.1rem; font-weight: 700;
-            background: var(--gradient);
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             white-space: nowrap;
@@ -55,58 +53,37 @@
         }
         nav a:hover { color: var(--accent); }
 
-        /* ─── Hero ─── */
         .hero {
-            padding: 120px 2rem 80px;
+            padding: 120px 2rem 60px;
             text-align: center;
             background: radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%);
         }
         .hero h1 {
-            font-size: 2.8rem;
-            background: var(--gradient);
+            font-size: 2.6rem;
+            background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             line-height: 1.3;
         }
-        .hero p {
-            color: var(--text-dim);
-            font-size: 1.1rem;
-            max-width: 650px;
-            margin: 1rem auto 0;
-        }
+        .hero p { color: var(--text-dim); font-size: 1.05rem; max-width: 650px; margin: .75rem auto 0; }
         .hero .badge {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 999px;
-            font-size: .8rem;
-            background: rgba(99,102,241,0.15);
-            color: var(--accent);
-            margin-top: 1.5rem;
+            display: inline-block; padding: 6px 16px; border-radius: 999px;
+            font-size: .8rem; background: rgba(99,102,241,0.15); color: var(--accent);
+            margin-top: 1rem;
         }
 
         .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
         section { padding: 4rem 0; }
         section + section { border-top: 1px solid var(--border); }
 
-        h2 {
-            font-size: 1.6rem;
-            margin-bottom: 1.5rem;
-        }
+        h2 { font-size: 1.6rem; margin-bottom: 1.5rem; }
         h2 .emoji { margin-right: .5rem; }
-        h3 {
-            font-size: 1.1rem;
-            margin: 1.5rem 0 .75rem;
-            color: var(--accent);
-        }
-        h4 {
-            font-size: .95rem;
-            margin: 1rem 0 .5rem;
-            color: var(--text);
-        }
-
+        h3 { font-size: 1.1rem; margin: 1.5rem 0 .75rem; color: var(--accent); }
+        h4 { font-size: .95rem; margin: 1rem 0 .5rem; }
         p { color: var(--text-dim); margin-bottom: 1rem; }
         p strong { color: var(--text); }
 
+        /* ─── 卡片 ─── */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -122,9 +99,83 @@
         }
         .card:hover { transform: translateY(-2px); border-color: var(--accent); }
         .card .icon { font-size: 1.75rem; margin-bottom: .5rem; display: block; }
-        .card h4 { font-size: 1rem; margin-bottom: .5rem; color: var(--text); }
-        .card p { font-size: .88rem; color: var(--text-dim); line-height: 1.6; margin: 0; }
+        .card h4 { font-size: 1rem; margin-bottom: .5rem; }
+        .card p { font-size: .88rem; margin: 0; }
 
+        /* ─── 交互卡片（核心功能） ─── */
+        .interact-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.25rem 0;
+            transition: border-color .2s;
+        }
+        .interact-card:hover { border-color: var(--accent); }
+        .interact-card .header {
+            display: flex; align-items: flex-start; gap: 1rem;
+            cursor: pointer;
+        }
+        .interact-card .header .icon { font-size: 1.8rem; flex-shrink: 0; }
+        .interact-card .header .info { flex: 1; }
+        .interact-card .header .info h3 { margin: 0 0 .25rem; font-size: 1.05rem; }
+        .interact-card .header .info p { margin: 0; font-size: .88rem; }
+        .interact-card .header .btn-gen {
+            flex-shrink: 0;
+            padding: 8px 20px;
+            border: none; border-radius: 8px;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            color: #fff;
+            font-size: .85rem; font-weight: 600;
+            cursor: pointer;
+            transition: transform .15s, box-shadow .15s;
+        }
+        .interact-card .header .btn-gen:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(99,102,241,0.3);
+        }
+        .interact-card .header .btn-gen:active { transform: scale(.97); }
+
+        .interact-card .output {
+            margin-top: 1rem;
+            display: none;
+        }
+        .interact-card .output.show { display: block; }
+
+        .interact-card .output pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            overflow-x: auto;
+            font-size: .82rem;
+            line-height: 1.5;
+            position: relative;
+        }
+        .interact-card .output pre code { font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace; }
+
+        .interact-card .btn-copy {
+            display: inline-flex; align-items: center; gap: 6px;
+            margin-top: .5rem;
+            padding: 6px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: transparent;
+            color: var(--text-dim);
+            font-size: .8rem;
+            cursor: pointer;
+            transition: all .2s;
+        }
+        .interact-card .btn-copy:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .interact-card .btn-copy.copied {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* ─── 代码块 ─── */
         pre {
             background: var(--code-bg);
             border: 1px solid var(--border);
@@ -135,39 +186,17 @@
             line-height: 1.6;
             margin: 1rem 0;
         }
-        code { font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace; }
         pre code { font-size: .82rem; }
 
-        .tag {
-            display: inline-block;
-            padding: 2px 10px;
-            border-radius: 999px;
-            font-size: .75rem;
-            font-weight: 600;
-        }
-        .tag-blue { background: rgba(99,102,241,0.15); color: #818cf8; }
-        .tag-green { background: rgba(34,197,94,0.15); color: #22c55e; }
-        .tag-orange { background: rgba(234,179,8,0.15); color: #eab308; }
-        .tag-pink { background: rgba(236,72,153,0.15); color: #ec4899; }
-        .tag-cyan { background: rgba(6,182,212,0.15); color: #06b6d4; }
-
-        ol, ul { color: var(--text-dim); padding-left: 1.5rem; margin: 1rem 0; }
-        li { margin-bottom: .5rem; }
-
+        /* ─── 表格 ─── */
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1.5rem 0;
-            font-size: .88rem;
+            width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .88rem;
         }
-        th, td {
-            padding: .75rem 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--border);
-        }
-        th { background: var(--bg-card); font-weight: 600; color: var(--text); }
+        th, td { padding: .75rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: var(--bg-card); font-weight: 600; }
         td { color: var(--text-dim); }
 
+        /* ─── 提示框 ─── */
         .alert {
             background: rgba(234,179,8,0.08);
             border-left: 4px solid #eab308;
@@ -183,25 +212,6 @@
         .alert.success { background: rgba(34,197,94,0.08); border-color: #22c55e; }
         .alert.success strong { color: #22c55e; }
 
-        .step-list { counter-reset: step; list-style: none; padding: 0; }
-        .step-list li {
-            counter-increment: step;
-            padding: .6rem 0 .6rem 2.2rem;
-            position: relative;
-            color: var(--text-dim);
-        }
-        .step-list li::before {
-            content: counter(step);
-            position: absolute; left: 0; top: .6rem;
-            width: 26px; height: 26px; line-height: 26px;
-            text-align: center;
-            border-radius: 50%;
-            background: var(--gradient);
-            color: #fff;
-            font-weight: 700;
-            font-size: .75rem;
-        }
-
         .qa-item {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -212,11 +222,20 @@
         .qa-item .q { font-weight: 600; color: var(--accent); margin-bottom: .5rem; }
         .qa-item .a { color: var(--text-dim); font-size: .9rem; }
 
+        /* ─── Toast ─── */
+        #toast {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            background: var(--bg-card); border: 1px solid var(--success);
+            color: var(--success); padding: 12px 24px;
+            border-radius: 10px; font-size: .9rem; font-weight: 600;
+            opacity: 0; transition: opacity .3s; z-index: 200;
+            pointer-events: none;
+        }
+        #toast.show { opacity: 1; }
+
         footer {
-            text-align: center;
-            padding: 3rem 2rem;
-            color: var(--text-dim);
-            font-size: .85rem;
+            text-align: center; padding: 3rem 2rem;
+            color: var(--text-dim); font-size: .85rem;
             border-top: 1px solid var(--border);
         }
 
@@ -224,6 +243,8 @@
             .hero h1 { font-size: 1.8rem; }
             nav { gap: .8rem; padding: 0 1rem; }
             .card-grid { grid-template-columns: 1fr; }
+            .interact-card .header { flex-wrap: wrap; }
+            .interact-card .header .btn-gen { width: 100%; }
         }
     </style>
 </head>
@@ -231,268 +252,373 @@
 
 <nav>
     <span class="logo">🤖 AI 智能体指南</span>
-    <a href="#intro">什么是智能体</a>
+    <a href="#intro">基础概念</a>
+    <a href="#share">配置共享</a>
     <a href="#models">模型选择</a>
-    <a href="#platform">平台搭建</a>
-    <a href="#channels">接入聊天</a>
-    <a href="#skills">扩展能力</a>
-    <a href="#automation">自动化</a>
+    <a href="#platform">搭建指南</a>
+    <a href="#skills">技能扩展</a>
     <a href="#practice">实战案例</a>
 </nav>
+
+<!-- Toast -->
+<div id="toast">✅ 已复制到剪贴板</div>
 
 <!-- ═══ Hero ═══ -->
 <header class="hero">
     <h1>AI 智能体<br>从入门到实践</h1>
-    <p>一套完整的知识体系，帮你理解、搭建、运用 AI 智能体。<br>不讲空洞概念，全是可落地的实操方法。</p>
+    <p>一套完整知识体系 + 可复用的智能体配置代码<br>点击下方卡片，生成你的专属配置，<strong>复制后发给任意智能体即可使用</strong></p>
     <span class="badge">📖 持续更新 · 2026 版</span>
 </header>
 
 <div class="container">
 
-<!-- ═══ 第一章：什么是 AI 智能体 ═══ -->
+<!-- ═══ 第一章 ═══ -->
 <section id="intro">
     <h2><span class="emoji">🧠</span> 第一章：什么是 AI 智能体？</h2>
-
-    <p><strong>AI 智能体（AI Agent）</strong> 和普通聊天 AI 最大的区别在于——<strong>它能主动做事</strong>。</p>
-
+    <p><strong>AI 智能体（AI Agent）</strong> 和普通聊天 AI 最大的区别——<strong>它能主动做事</strong>。</p>
     <div class="card-grid">
         <div class="card">
             <span class="icon">💬</span>
             <h4>普通 AI 聊天</h4>
-            <p>你问一句，它答一句。对话结束就结束，不会主动帮你做任何事。就像一个知识渊博但从不主动说话的专家。</p>
+            <p>你问一句，它答一句。对话结束就结束，就像一个知识渊博但从不主动说话的专家。</p>
         </div>
         <div class="card">
             <span class="icon">🤖</span>
             <h4>AI 智能体</h4>
-            <p>能理解目标、拆解任务、调用工具、记住上下文。可以定时执行、主动通知、跨平台运行。</p>
+            <p>能理解目标、拆解任务、调用工具、主动通知。可以定时执行、跨平台运行。</p>
+        </div>
+    </div>
+    <table>
+        <tr><th>能力</th><th>说明</th><th>举例</th></tr>
+        <tr><td>🛠️ 工具调用</td><td>能调用搜索引擎、执行代码、访问 API</td><td>"查天气" → 自动搜索天气网站</td></tr>
+        <tr><td>🧠 自主规划</td><td>能拆解复杂任务，分步执行</td><td>"做市场调研" → 搜索→整理→出报告</td></tr>
+        <tr><td>💾 持久记忆</td><td>跨会话记住关键信息</td><td>你的偏好、项目配置，下次还记得</td></tr>
+    </table>
+</section>
+
+<!-- ═══ 第二章：配置共享（核心功能） ═══ -->
+<section id="share">
+    <h2><span class="emoji">🔗</span> 第二章：智能体配置共享</h2>
+    <p>下面每个卡片都是一份"智能体能读懂的配置"。点击<strong>「生成配置」</strong>按钮，代码会自动出现，复制后发给你的智能体，它就能自动配置好对应能力。</p>
+
+    <!-- ── ① 性格模板 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🧬</span>
+            <div class="info">
+                <h3>智能体性格模板</h3>
+                <p>定义智能体的语气、风格、原则。复制后发给你的智能体，它会按此性格与你交流。</p>
+            </div>
+            <button class="btn-gen" onclick="genPersonality()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-personality">
+            <pre><code id="code-personality"># 以下内容定义智能体的性格，请读取并遵循
+
+## 角色定位
+你是我的 AI 助手，负责帮我处理各类任务。
+
+## 沟通风格
+- 用中文回答，简洁明了
+- 先给结论，再解释原因
+- 遇到不确定的信息，坦诚说明，不编造
+
+## 核心原则
+- 安全第一：不执行有风险的命令
+- 效率优先：能用工具完成的不用手动
+- 主动汇报：重要任务完成后主动通知我</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-personality', this)">📋 复制代码</button>
         </div>
     </div>
 
-    <h3>智能体的三大核心能力</h3>
-    <table>
-        <tr><th>能力</th><th>说明</th><th>举例</th></tr>
-        <tr>
-            <td>🛠️ 工具调用</td>
-            <td>能调用搜索引擎、执行代码、访问 API</td>
-            <td>"查一下今天的天气" → 自动搜索天气网站</td>
-        </tr>
-        <tr>
-            <td>🧠 自主规划</td>
-            <td>能拆解复杂任务，分步执行</td>
-            <td>"帮我做一份市场调研" → 搜索→整理→出报告</td>
-        </tr>
-        <tr>
-            <td>💾 持久记忆</td>
-            <td>跨会话记住关键信息</td>
-            <td>你告诉过它的偏好、项目配置，下次记得</td>
-        </tr>
-    </table>
+    <!-- ── ② 小云雀 AI 创作技能 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🎬</span>
+            <div class="info">
+                <h3>AI 视频创作技能（小云雀）</h3>
+                <p>让智能体获得 AI 视频生成能力。需要先设置 XYQ_ACCESS_KEY 环境变量。</p>
+            </div>
+            <button class="btn-gen" onclick="genXyqSkill()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-xyq">
+            <pre><code id="code-xyq"># AI 视频创作技能 — 请读取并安装此技能
+---
+name: xyq-nest-skill
+description: 通过小云雀的 AI 能力进行视频/图片创作
 
-    <div class="alert info">
-        <strong>💡 直观理解：</strong>
-        普通 AI 像一本会说话的百科全书。AI 智能体像一个有手有脚的实习生——它能听懂你的目标，自己想办法完成，做完还会跟你汇报。
+## 安装步骤
+1. 设置环境变量：export XYQ_ACCESS_KEY="你的密钥"
+2. 所需脚本：submit_run.py, get_thread.py, upload_file.py, download_results.py
+3. 完整技能文件见：https://gitee.com/Pippit-dev/pippit-skills
+
+## 能力列表
+- 文生图 / 文生视频
+- 图生视频 / 视频编辑
+- 短剧生成 / MV 制作
+- 产品广告 / 宣传片制作
+
+## 工作流程
+1. 用户提出创作需求
+2. 调用 submit_run.py 提交任务
+3. 每 10 秒轮询 get_thread.py 查看进度
+4. 完成后调用 download_results.py 下载成片
+5. 展示结果给用户
+
+## 重要原则
+- 只做传话，不要替用户扩写 prompt
+- 后端 AI 比你更懂模型参数，别画蛇添足</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-xyq', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ③ 定时任务模板 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">⏰</span>
+            <div class="info">
+                <h3>定时任务配置</h3>
+                <p>设置智能体的定时自动化任务。复制后智能体就知道何时该做什么。</p>
+            </div>
+            <button class="btn-gen" onclick="genCronConfig()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-cron">
+            <pre><code id="code-cron"># 定时任务配置 — 请读取并按计划执行
+
+## 每日任务
+- ⏰ 08:00 — 搜索今日科技新闻，整理摘要推送
+- ⏰ 09:30 — 检查股票/加密货币行情
+- ⏰ 12:00 — 午间信息简报
+- ⏰ 18:00 — 日终工作总结提醒
+
+## 每周任务
+- 📅 周一 09:00 — 周计划梳理
+- 📅 周五 17:00 — 周报撰写提醒
+- 📅 周六 10:00 — 一周技术文章汇总
+
+## 监控任务
+- 🔄 每 30 分钟 — 检查关键服务状态
+- 🔄 每小时 — 检查是否有重要待办到期</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-cron', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ④ 模型切换配置 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🎯</span>
+            <div class="info">
+                <h3>模型选型策略</h3>
+                <p>告诉智能体在不同任务下该用哪个模型，省钱又高效。</p>
+            </div>
+            <button class="btn-gen" onclick="genModelStrategy()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-model">
+            <pre><code id="code-model"># 模型选型策略 — 请根据任务类型选择模型
+
+## 分类策略
+
+### ⚡ 简单任务（用便宜模型）
+- 日常问答、信息查询、简单翻译
+- 推荐：DeepSeek V4 Flash, Claude Haiku, Gemini Flash
+- 原因：速度快、成本低（几毛钱/百万token）
+
+### 🔧 中等任务（均衡模型）
+- 代码编写、文档撰写、数据分析
+- 推荐：Claude Sonnet 4.6, GPT-4o, Qwen3-VL
+- 原因：能力足够，价格适中
+
+### 🏆 复杂任务（旗舰模型）
+- 架构设计、复杂调试、深度推理
+- 推荐：Claude Opus 4.7, GPT-5.5, Gemini 3.1 Pro
+- 原因：需要最强的推理和编码能力
+
+## 多模态策略
+- 只看图：Claude Sonnet 4.6 / Opus 4.7
+- 图片+音频+视频：Gemini 3 Pro
+- 中文看图：GLM-4.6V / 豆包 Seed
+- 纯文本省钱：DeepSeek V4 Flash</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-model', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ⑤ 微信接入配置 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">💚</span>
+            <div class="info">
+                <h3>微信/Telegram 接入指南</h3>
+                <p>让智能体接入你的 IM 平台，随时随地对话和接收通知。</p>
+            </div>
+            <button class="btn-gen" onclick="genChannelConfig()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-channel">
+            <pre><code id="code-channel"># IM 平台接入指南 — 请配置以下频道
+
+## 微信接入
+1. 在 Agent 配置中添加频道 → 微信
+2. 扫描生成的二维码
+3. 确认登录后即可在微信上使用
+
+## Telegram 接入
+1. 在 @BotFather 创建机器人，获取 bot_token
+2. 在 Agent 配置中添加频道 → Telegram
+3. 填入 bot_token
+4. 在 Telegram 中搜索你的机器人开始对话
+
+## 通知推送规则
+- 🔔 定时任务完成 → 推送到默认频道
+- 🔔 监控异常 → 立即推送
+- 🔔 长时间任务完成 → 推送结果
+
+## 注意事项
+- 微信需要桌面客户端保持运行
+- Telegram 最稳定，推荐作为主力
+- 可同时连接多个平台，互不干扰</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-channel', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ⑥ 技能安装模板 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🔌</span>
+            <div class="info">
+                <h3>技能开发模板（自定义）</h3>
+                <p>教你如何编写一个智能体能识别的技能。复制这个模板，让智能体帮你创建新技能。</p>
+            </div>
+            <button class="btn-gen" onclick="genSkillTemplate()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-skill">
+            <pre><code id="code-skill"># 技能开发模板 — 请按此结构创建新技能
+
+## 技能结构
+my-skill/
+├── SKILL.md          # 技能定义文件（必填）
+├── scripts/          # 脚本目录
+│   ├── main.py       # 主要逻辑
+│   └── utils.py      # 工具函数
+└── README.md         # 使用说明
+
+## SKILL.md 模板
+---start---
+name: my-skill
+description: 简短描述技能功能
+user-invocable: true
+metadata:
+  openclaw:
+    emoji: "🔧"
+    requires:
+      bins: ["python3"]
+      env: ["MY_API_KEY"]
+---
+# 技能使用说明
+
+## 功能描述
+[这里写技能的具体能力]
+
+## 使用方法
+[这里写如何调用]
+
+## 注意事项
+[这里写限制和前提条件]
+---end---
+
+## 注册技能
+1. 创建好 SKILL.md 和脚本
+2. 使用 init 初始化技能目录
+3. 将文件放入技能目录
+4. 使用 register 注册激活</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-skill', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <div class="alert success">
+        <strong>💡 使用方式：</strong>
+        点击「生成配置」→ 代码出现 → 点击「复制代码」→ 打开你的智能体对话框 → <strong>粘贴发送</strong> → 智能体自动读取并配置。就是这么简单。
     </div>
 </section>
 
-<!-- ═══ 第二章：模型选择 ═══ -->
+<!-- ═══ 第三章：模型选择 ═══ -->
 <section id="models">
-    <h2><span class="emoji">🎯</span> 第二章：如何选择 AI 模型？</h2>
+    <h2><span class="emoji">🎯</span> 第三章：如何选择 AI 模型？</h2>
 
-    <p>智能体的"大脑"就是大语言模型。选对模型，事半功倍。下面是 2026 年主流模型的选型指南。</p>
-
-    <h3>模型能力金字塔</h3>
+    <h3>2026 主流模型速览</h3>
     <table>
-        <tr><th>层级</th><th>代表模型</th><th>适合场景</th></tr>
+        <tr><th>定位</th><th>代表模型</th><th>适合场景</th></tr>
         <tr><td>🏆 旗舰</td><td>Claude Opus 4.7, GPT-5.5, Gemini 3.1 Pro</td><td>复杂编程、深度推理、专业级任务</td></tr>
         <tr><td>⚡ 均衡</td><td>Claude Sonnet 4.6, GPT-4o, Qwen3-VL</td><td>日常开发、Agent 工作流、性价比之选</td></tr>
         <tr><td>🚀 轻量</td><td>Claude Haiku, Gemini Flash, DeepSeek Flash</td><td>简单任务、高频调用、低成本</td></tr>
         <tr><td>💰 极致性价比</td><td>DeepSeek V4, GLM-4.5V, Qwen Flash</td><td>中文场景、批量处理、预算敏感</td></tr>
     </table>
 
-    <h3>需要看图/看视频怎么办？</h3>
-    <p>不是所有模型都能处理图片。选择多模态模型时注意：</p>
+    <h3>多模态模型怎么选？</h3>
     <table>
-        <tr><th>需求</th><th>推荐模型</th><th>说明</th></tr>
+        <tr><th>需求</th><th>推荐</th><th>说明</th></tr>
         <tr><td>只看图 + 编码最强</td><td>Claude Sonnet 4.6 / Opus 4.7</td><td>看图精度最高，Agent 能力顶尖</td></tr>
-        <tr><td>图 + 音 + 视频全支持</td><td>Gemini 3 Pro</td><td>多模态天花板，2M 上下文</td></tr>
+        <tr><td>图+音+视频全支持</td><td>Gemini 3 Pro</td><td>多模态天花板，2M 上下文</td></tr>
         <tr><td>中文看图最佳</td><td>GLM-4.6V / 豆包 Seed</td><td>国产，中文识别优秀</td></tr>
-        <tr><td>开源 + 便宜</td><td>Qwen3-VL-32B / MiMo V2.5</td><td>Apache 2.0，可自部署</td></tr>
-        <tr><td>纯文本性价比</td><td>DeepSeek V4 Flash</td><td>最便宜的选项之一</td></tr>
+        <tr><td>开源 + 便宜</td><td>Qwen3-VL / MiMo V2.5</td><td>Apache 2.0，可自部署</td></tr>
+        <tr><td>纯文本省钱</td><td>DeepSeek V4 Flash</td><td>最便宜的选项之一</td></tr>
     </table>
-
-    <div class="alert">
-        <strong>⚠️ 选型原则：</strong>
-        不要用最强的模型做最简单的事。高频简单任务用轻量模型省钱，复杂任务上旗舰模型。混合使用最经济。
-    </div>
 </section>
 
-<!-- ═══ 第三章：平台搭建 ═══ -->
+<!-- ═══ 第四章：搭建指南 ═══ -->
 <section id="platform">
-    <h2><span class="emoji">🏗️</span> 第三章：搭建你的智能体平台</h2>
-
-    <p>目前主流的智能体平台是 <strong>CherryStudio</strong>（桌面端），它提供了一个完整的 Agent 运行环境。</p>
+    <h2><span class="emoji">🏗️</span> 第四章：搭建你的智能体</h2>
+    <p>推荐使用 <strong>CherryStudio</strong> 桌面端作为智能体运行平台。</p>
 
     <h3>快速上手指南</h3>
-    <ol class="step-list">
-        <li><strong>下载安装 CherryStudio</strong> —— 从官网下载并安装桌面客户端</li>
-        <li><strong>配置模型 API</strong> —— 在设置中添加你的模型渠道（如 Claude、Gemini、DeepSeek 等）</li>
-        <li><strong>创建智能体</strong> —— 给智能体起名、选模型、写人设（SOUL.md）</li>
-        <li><strong>配置环境变量</strong> —— 如 <code>XYQ_ACCESS_KEY</code>、<code>OPENAI_API_KEY</code> 等</li>
-        <li><strong>安装技能</strong> —— 从技能市场安装或自己编写技能扩展能力</li>
-        <li><strong>连接 IM 平台</strong> —— 接入微信/Telegram 等，随时随地使用</li>
-    </ol>
+    <table>
+        <tr><th>步骤</th><th>操作</th></tr>
+        <tr><td>1</td><td>下载安装 CherryStudio</td></tr>
+        <tr><td>2</td><td>在设置中添加模型 API 渠道（Claude/Gemini/DeepSeek 等）</td></tr>
+        <tr><td>3</td><td>创建智能体 → 选模型 → 写入性格（可复制上方模板）</td></tr>
+        <tr><td>4</td><td>配置环境变量（如 XYQ_ACCESS_KEY）</td></tr>
+        <tr><td>5</td><td>安装技能（从市场或手动安装）</td></tr>
+        <tr><td>6</td><td>连接 IM 平台，随时随地使用</td></tr>
+    </table>
 
-    <h3>智能体的三个配置文件</h3>
+    <h3>三个核心配置文件</h3>
     <table>
         <tr><th>文件</th><th>作用</th><th>更新方式</th></tr>
-        <tr><td>SOUL.md</td><td>定义智能体的性格、语气、原则</td><td>对话中自然学习更新</td></tr>
-        <tr><td>USER.md</td><td>记录你的偏好、时区、习惯</td><td>对话中自然学习更新</td></tr>
+        <tr><td>SOUL.md</td><td>定义智能体的性格、语气、原则</td><td>对话中自动学习更新</td></tr>
+        <tr><td>USER.md</td><td>记录你的偏好、时区、习惯</td><td>对话中自动学习更新</td></tr>
         <tr><td>FACT.md</td><td>长期知识：项目信息、技术决策</td><td>自动维护，也可手动要求记录</td></tr>
     </table>
-
-    <div class="alert success">
-        <strong>💡 最佳实践：</strong>
-        给智能体一个清晰的人设。比如"你是我的编程助手，喜欢用简洁的中文回答，优先考虑代码质量和安全性。"人设越清晰，智能体的表现越稳定。
-    </div>
 </section>
 
-<!-- ═══ 第四章：接入聊天平台 ═══ -->
-<section id="channels">
-    <h2><span class="emoji">📡</span> 第四章：接入 IM 聊天平台</h2>
-
-    <p>智能体的一大优势是能接入你日常使用的聊天工具，不需要每次都打开网页。</p>
-
-    <h3>支持的平台与接入方式</h3>
-    <table>
-        <tr><th>平台</th><th>接入难度</th><th>最佳用途</th></tr>
-        <tr><td>💬 Telegram</td><td>⭐⭐ 简单</td><td>最稳定、功能最全，适合主力使用</td></tr>
-        <tr><td>💚 微信</td><td>⭐⭐ 简单</td><td>国内最普及，需桌面微信客户端配合</td></tr>
-        <tr><td>✈️ 飞书</td><td>⭐⭐ 简单</td><td>企业用户首选，可扫码自动创建机器人</td></tr>
-        <tr><td>🐧 QQ</td><td>⭐⭐⭐ 中等</td><td>需 QQ 开放平台注册应用</td></tr>
-        <tr><td>🎮 Discord</td><td>⭐⭐⭐ 中等</td><td>开发者社区常用，功能丰富</td></tr>
-        <tr><td>💼 Slack</td><td>⭐⭐⭐ 中等</td><td>团队协作场景，Socket Mode 接入</td></tr>
-    </table>
-
-    <h3>微信接入详解（最常用）</h3>
-    <ol class="step-list">
-        <li>在智能体配置中选 <strong>添加频道 → 微信</strong></li>
-        <li>系统会生成一个<strong>二维码图片</strong></li>
-        <li>打开手机微信，<strong>扫一扫</strong>这个二维码</li>
-        <li>确认登录，微信就自动连接上了</li>
-        <li>以后在微信上给这个联系人发消息，智能体就能收到并回复</li>
-    </ol>
-
-    <div class="alert info">
-        <strong>🔔 通知推送：</strong>
-        智能体可以主动给你发消息。比如定时任务完成后、监控到异常时，自动推送到你的微信/Telegram。
-    </div>
-</section>
-
-<!-- ═══ 第五章：扩展能力 ═══ -->
+<!-- ═══ 第五章：技能扩展 ═══ -->
 <section id="skills">
-    <h2><span class="emoji">🔌</span> 第五章：用技能扩展智能体</h2>
-
-    <p>技能（Skills）是智能体的"插件"。每个技能赋予智能体一项专业能力。</p>
-
-    <h3>技能能做什么？</h3>
+    <h2><span class="emoji">🔌</span> 第五章：技能扩展</h2>
+    <p>技能是智能体的"插件"。安装一个技能，就获得一项新能力。</p>
     <div class="card-grid">
-        <div class="card">
-            <span class="icon">🎬</span>
-            <h4>AI 视频创作</h4>
-            <p>说"做一段产品宣传视频"就能自动调用 AI 视频生成平台，上传参考图、编排工作流、下载成片。</p>
-        </div>
-        <div class="card">
-            <span class="icon">📝</span>
-            <h4>代码审查</h4>
-            <p>自动审查代码变更，检查复用性、质量、效率问题，给出改进建议。</p>
-        </div>
-        <div class="card">
-            <span class="icon">🔐</span>
-            <h4>安全审查</h4>
-            <p>对代码变更进行安全审计，发现潜在的安全漏洞和风险。</p>
-        </div>
-        <div class="card">
-            <span class="icon">🔄</span>
-            <h4>循环任务</h4>
-            <p>定时执行特定任务，如每5分钟检查一次部署状态，自动汇报。</p>
-        </div>
-        <div class="card">
-            <span class="icon">📅</span>
-            <h4>定时调度</h4>
-            <p>在指定时间自动触发远程任务，支持 cron 表达式。</p>
-        </div>
-        <div class="card">
-            <span class="icon">➕</span>
-            <h4>自定义技能</h4>
-            <p>你自己也可以编写技能——写一份 SKILL.md 定义文件，配几个脚本，就能让智能体获得新能力。</p>
-        </div>
+        <div class="card"><span class="icon">🎬</span><h4>AI 视频创作</h4><p>说"做个视频"就能自动调用 AI 平台生成。</p></div>
+        <div class="card"><span class="icon">📝</span><h4>代码审查</h4><p>自动检查代码质量、复用性、安全性。</p></div>
+        <div class="card"><span class="icon">🔄</span><h4>循环任务</h4><p>定时检查部署状态，自动汇报结果。</p></div>
+        <div class="card"><span class="icon">➕</span><h4>自定义技能</h4><p>自己编写 SKILL.md + 脚本即可扩展能力。</p></div>
     </div>
 
-    <h3>技能的获取方式</h3>
-    <ol class="step-list">
-        <li><strong>从市场安装</strong>——搜索需要的技能，一键安装</li>
-        <li><strong>从 Git 仓库添加</strong>——很多开源技能发布在 GitHub/Gitee 上</li>
-        <li><strong>自己编写</strong>——用 <code>init</code> 创建目录 → 写 SKILL.md → 注册即可使用</li>
+    <h3>技能获取方式</h3>
+    <ol style="color:var(--text-dim); padding-left:1.5rem; margin:1rem 0;">
+        <li><strong>从市场安装</strong> — 搜索 → 一键安装</li>
+        <li><strong>从 Git 仓库添加</strong> — GitHub / Gitee 上有大量开源技能</li>
+        <li><strong>自己编写</strong> — 使用上方「技能开发模板」创建</li>
     </ol>
-
-    <div class="alert success">
-        <strong>📌 技能触发机制：</strong>
-        技能不需要手动开启。当你的请求匹配技能描述时，智能体会自动调用对应的技能。比如装了视频创作技能后，说"做个视频"就会自动触发。
-    </div>
 </section>
 
-<!-- ═══ 第六章：自动化 ═══ -->
-<section id="automation">
-    <h2><span class="emoji">⏰</span> 第六章：定时任务与自动化</h2>
-
-    <p>让智能体在指定时间自动执行任务，是你最值得掌握的进阶功能。</p>
-
-    <h3>支持的任务类型</h3>
-    <table>
-        <tr><th>类型</th><th>说明</th><th>示例</th></tr>
-        <tr><td>⏱️ 一次性任务</td><td>在指定时间执行一次</td><td>"30分钟后提醒我开会"</td></tr>
-        <tr><td>🔄 周期性任务</td><td>按固定间隔重复</td><td>"每2小时检查一次服务器状态"</td></tr>
-        <tr><td>📅 Cron 表达式</td><td>灵活的时间规则</td><td>"每天早上9点推送新闻" → <code>0 9 * * 1-5</code></td></tr>
-    </table>
-
-    <h3>实用场景举例</h3>
-    <pre><code># 每日早报
-"每天早上8点搜索今日科技新闻，推送到我微信"
-
-# 股票监控
-"每30分钟检查一下某只股票的价格，波动超过5%通知我"
-
-# 周报提醒
-"每周五下午5点提醒我写周报"
-
-# 定时清理
-"每天凌晨3点执行一次临时文件清理"</code></pre>
-
-    <div class="alert">
-        <strong>⏳ 超时说明：</strong>
-        定时任务默认超时时间为 2 分钟。如果是耗时较长的任务（如视频生成），可以指定更长的超时时间。
-    </div>
-</section>
-
-<!-- ═══ 第七章：实战案例 ═══ -->
+<!-- ═══ 第六章：实战案例 ═══ -->
 <section id="practice">
-    <h2><span class="emoji">💡</span> 第七章：实战案例</h2>
+    <h2><span class="emoji">💡</span> 第六章：实战案例</h2>
 
-    <h3>案例一：AI 短视频创作助手</h3>
-    <p>搭配小云雀（Pippit）AI 创作平台，实现从需求到成片的全流程自动化。</p>
+    <h3>案例一：AI 视频创作</h3>
     <pre><code>用户：帮我生成一段30秒的科技产品宣传视频
-智能体→ ① 调用视频创作 API 提交任务
+智能体→ ① 调用小云雀 API 提交任务
       ② 把进度链接展示给用户
       ③ 每10秒轮询一次进度
-      ④ 生成完成 → 下载成片 → 展示给用户
+      ④ 生成完成 → 下载成片 → 展示结果</code></pre>
 
-用户：参考这个视频做个同风格的
-智能体→ ① 上传参考视频 → 拿到 asset_id
-      ② 把参考 ID 和创作需求一起提交
-      ③ 轮询 → 下载结果</code></pre>
-
-    <h3>案例二：自动化信息收集</h3>
-    <pre><code>用户：每天早上7点，搜索AI行业最新动态，整理成摘要发给我
+    <h3>案例二：每日信息收集</h3>
+    <pre><code>用户：每天早上7点，搜索AI最新动态，整理成摘要发给我
 智能体→ 创建定时任务 (0 7 * * *)
       每天7点自动:
       ① 搜索多个信息源
@@ -500,86 +626,35 @@
       ③ 推送到你的聊天窗口</code></pre>
 
     <h3>案例三：跨平台协作</h3>
-    <pre><code>你在微信上给智能体发消息：
-"帮我查一下这个项目的API文档"
-
+    <pre><code>你在微信上发消息："查一下这个项目的 API 文档"
 智能体搜索后回复你，同时：
 → 把重要信息记录到记忆中
-→ 如果设置了定时检查，到时间自动跟进
-
-你不需要打开任何网页，全程微信完成</code></pre>
+→ 到时间自动跟进
+全程微信完成，无需打开任何网页</code></pre>
 </section>
 
 <!-- ═══ FAQ ═══ -->
-<section id="faq">
+<section>
     <h2><span class="emoji">❓</span> 常见问题</h2>
-
     <div class="qa-item">
-        <div class="q">🤔 智能体会泄露我的隐私吗？</div>
-        <div class="a">所有记忆和配置文件存储在本地。联网功能（搜索、API调用）会经过对应服务商，请勿在对话中透露密码等敏感信息。</div>
+        <div class="q">🤔 生成的配置复制后发给智能体，它真的能懂吗？</div>
+        <div class="a">能。智能体能读懂结构化的文本指令。把代码粘贴到对话中，它就会读取并按照配置执行。这就是"智能体之间共享配置"的原理。</div>
     </div>
-
     <div class="qa-item">
-        <div class="q">💰 用智能体是不是很贵？</div>
-        <div class="a">看模型选择。如果全部用旗舰模型（Claude Opus、GPT-5.5）确实不便宜。但日常任务用性价比模型（DeepSeek Flash、Claude Haiku、Gemini Flash），一天几毛钱就够了。关键策略：简单任务用便宜模型，复杂任务上好模型。</div>
+        <div class="q">💰 用智能体贵吗？</div>
+        <div class="a">看模型。旗舰模型确实贵，但日常用轻量模型一天只要几毛钱。关键策略：简单任务用便宜模型，复杂任务用好模型。</div>
     </div>
-
     <div class="qa-item">
         <div class="q">🔌 技能从哪里来？</div>
-        <div class="a">技能市场有现成的，GitHub/Gitee 上有开源技能，你也可以自己写。编写一个技能只需要创建一个 SKILL.md 描述文件和对应的脚本。</div>
+        <div class="a">市场有现成的，GitHub/Gitee 有开源的，也可以自己写。创建一个技能只需要一份 SKILL.md 和对应的脚本。</div>
     </div>
-
     <div class="qa-item">
         <div class="q">📱 手机能用吗？</div>
-        <div class="a">通过微信/Telegram接入后，手机上直接发消息就能用，不需要开电脑。定时任务和通知推送也会直接到你手机。</div>
+        <div class="a">通过微信/Telegram 接入后，手机上直接发消息就能用。定时任务和通知也会直接推送到你手机。</div>
     </div>
-
     <div class="qa-item">
-        <div class="q">🔄 智能体出错了怎么办？</div>
-        <div class="a">检查模型渠道是否正常、环境变量是否配置正确、技能脚本是否有报错。大部分问题出在网络或配置上。</div>
-    </div>
-</section>
-
-<!-- ═══ 总结 ═══ -->
-<section>
-    <h2><span class="emoji">🎯</span> 总结</h2>
-
-    <div class="card-grid">
-        <div class="card">
-            <span class="icon">🧠</span>
-            <h4>理解智能体</h4>
-            <p>不是问答机器人，是能主动做事、能规划、能调用工具的 AI 助手。</p>
-        </div>
-        <div class="card">
-            <span class="icon">🎯</span>
-            <h4>选对模型</h4>
-            <p>按场景选模型，旗舰+轻量混合使用，既省钱又高效。</p>
-        </div>
-        <div class="card">
-            <span class="icon">🏗️</span>
-            <h4>搭好平台</h4>
-            <p>用 CherryStudio 搭建运行环境，配置模型、人设、环境变量。</p>
-        </div>
-        <div class="card">
-            <span class="icon">🔌</span>
-            <h4>扩展技能</h4>
-            <p>安装或编写技能，让智能体获得视频创作、代码审查等专业能力。</p>
-        </div>
-        <div class="card">
-            <span class="icon">📡</span>
-            <h4>接入 IM</h4>
-            <p>连接微信/Telegram，随时随地使用，主动通知到你手机。</p>
-        </div>
-        <div class="card">
-            <span class="icon">⏰</span>
-            <h4>设置自动化</h4>
-            <p>定时任务让智能体在你睡觉时也帮你工作。</p>
-        </div>
-    </div>
-
-    <div class="alert success" style="text-align:center; padding:2rem;">
-        <strong style="font-size:1.1rem;">🚀 记住：最好的学习方式就是动手试</strong><br>
-        先搭一个简单的智能体，然后用起来，在实战中逐步完善。遇到问题不用慌，AI 就是你最好的老师。
+        <div class="q">🔄 配置换电脑了怎么办？</div>
+        <div class="a">用这个网页上的「配置共享」功能，把生成的代码复制下来，到新电脑上发给智能体即可。一秒迁移。</div>
     </div>
 </section>
 
@@ -590,5 +665,61 @@
     <p style="margin-top:.5rem; font-size:.8rem;">基于真实经验编写 · 持续更新 · 欢迎分享</p>
 </footer>
 
+<script>
+function copyCode(id, btn) {
+    const code = document.getElementById(id).textContent;
+    navigator.clipboard.writeText(code).then(() => {
+        btn.classList.add('copied');
+        btn.textContent = '✅ 已复制';
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.textContent = '📋 复制代码';
+        }, 2000);
+    }).catch(() => {
+        // Fallback
+        const ta = document.createElement('textarea');
+        ta.value = code;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.classList.add('copied');
+        btn.textContent = '✅ 已复制';
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.textContent = '📋 复制代码';
+        }, 2000);
+    });
+}
+
+function toggleOutput(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('show');
+}
+
+function genPersonality() {
+    toggleOutput('out-personality');
+}
+
+function genXyqSkill() {
+    toggleOutput('out-xyq');
+}
+
+function genCronConfig() {
+    toggleOutput('out-cron');
+}
+
+function genModelStrategy() {
+    toggleOutput('out-model');
+}
+
+function genChannelConfig() {
+    toggleOutput('out-channel');
+}
+
+function genSkillTemplate() {
+    toggleOutput('out-skill');
+}
+</script>
 </body>
 </html>
