@@ -542,80 +542,59 @@ metadata:
             </div>
             <button class="btn-gen" onclick="genMcpConfig()">📋 生成配置</button>
         </div>
-        <div class="output" id="out-mcp">
-            <pre><code id="code-mcp"># MCP 安全配置 — 请读取并安装以下工具服务
+        	        <div class="output" id="out-mcp">
+	            <pre><code id="code-mcp"># MCP 安全配置 — 一键导入 CherryStudio
 
-## 📦 必装 MCP Server 列表
+## 📦 CherryStudio 标准格式
 
-### 1. 文件系统（filesystem）
-用途：安全地读写文件、管理项目目录
-```json
+复制以下 JSON，在 CherryStudio → 设置 → MCP 服务器 → 切换到「JSON」标签页 → 粘贴并保存：
+
+\`\`\`json
 {
-  "filesystem": {
-    "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-filesystem", "./"],
-    "description": "安全的文件读写操作"
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:\\Users\\ZEKAN\\Documents"],
+      "type": "stdio",
+      "isActive": true
+    },
+    "web-search": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-web-search"],
+      "env": { "API_KEY": "你的搜索API密钥" },
+      "type": "stdio",
+      "isActive": true
+    },
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": { "GITHUB_TOKEN": "你的GitHub Token" },
+      "type": "stdio",
+      "isActive": true
+    },
+    "sqlite": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-sqlite", "--db-path", "./data.db"],
+      "type": "stdio",
+      "isActive": true
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
+      "type": "stdio",
+      "isActive": true
+    }
   }
 }
-```
-
-### 2. Web 搜索（exa / brave-search）
-用途：联网搜索实时信息
-```json
-{
-  "web-search": {
-    "command": "npx",
-    "args": ["-y", "@anthropic-ai/mcp-server-web-search"],
-    "env": { "API_KEY": "你的搜索API密钥" },
-    "description": "联网搜索最新信息"
-  }
-}
-```
-
-### 3. GitHub 集成
-用途：克隆仓库、创建 PR、管理 Issue
-```json
-{
-  "github": {
-    "command": "npx",
-    "args": ["-y", "@modelcontextprotocol/server-github"],
-    "env": { "GITHUB_TOKEN": "你的GitHub令牌" },
-    "description": "GitHub 仓库与代码管理"
-  }
-}
-```
-
-### 4. SQLite 数据库
-用途：查询和管理本地数据库
-```json
-{
-  "sqlite": {
-    "command": "npx",
-    "args": ["-y", "@anthropic-ai/mcp-server-sqlite", "--db-path", "./data.db"],
-    "description": "本地数据库查询"
-  }
-}
-```
-
-### 5. 网页抓取（fetch）
-用途：读取网页内容、API 文档
-```json
-{
-  "fetch": {
-    "command": "npx",
-    "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
-    "description": "抓取网页内容为 Markdown"
-  }
-}
-```
+\`\`\`
 
 ## 🔒 安全原则
 - 每个 MCP Server 只赋予最小必要权限
-- filesystem 限制在项目目录内，不要给根目录权限
-- GitHub Token 使用只读或有限 scope
-- 敏感 API Key 通过环境变量注入，不写在代码里</code></pre>
-            <button class="btn-copy" onclick="copyCode('code-mcp', this)">📋 复制代码</button>
-        </div>
+- filesystem 限制在项目目录内
+- GitHub Token 使用有限 scope
+- 敏感 API Key 通过 env 字段注入</code></pre>
+	            <button class="btn-copy" onclick="copyCode('code-mcp', this)">📋 复制代码</button>
+	        </div>
     </div>
 
     <!-- ── ⑧ 实用技能一键部署 ── -->
