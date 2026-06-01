@@ -255,6 +255,7 @@
     <a href="#intro">基础概念</a>
     <a href="#share">配置共享</a>
     <a href="#models">模型选择</a>
+    <a href="#mcp-intro">MCP 详解</a>
     <a href="#platform">搭建指南</a>
     <a href="#skills">技能扩展</a>
     <a href="#practice">实战案例</a>
@@ -532,29 +533,78 @@ metadata:
         </div>
     </div>
 
-    <!-- ── ⑦ MCP 安全配置 ── -->
-    <div class="interact-card">
-        <div class="header">
-            <span class="icon">🔧</span>
-            <div class="info">
-                <h3>MCP 安全配置一键部署</h3>
-                <p>让智能体获得文件读写、代码执行、搜索、Git 操作等核心能力。这是"让智能体开始自己写代码"的关键一步。</p>
-            </div>
-            <button class="btn-gen" onclick="genMcpConfig()">📋 生成配置</button>
-        </div>
-        	        <div class="output" id="out-mcp">
-	            <pre><code id="code-mcp"># MCP 安全配置 — 一键导入 CherryStudio
+    	    <!-- ── ⑦ MCP 安全配置 ── -->
+	    <div class="interact-card">
+	        <div class="header">
+	            <span class="icon">🔧</span>
+	            <div class="info">
+	                <h3>MCP 安全配置一键部署</h3>
+	                <p>让智能体获得文件读写、搜索、Git 操作等核心能力。这是"让智能体开始自己写代码"的关键一步。</p>
+	            </div>
+	            <button class="btn-gen" onclick="genMcpConfig()">📋 生成配置</button>
+	        </div>
+	        <div class="output" id="out-mcp">
+	            <pre><code id="code-mcp"># MCP 是什么？ —— 智能体的"外设接口"
 
-## 📦 CherryStudio 标准格式
+## 💡 一句话理解
 
-复制以下 JSON，在 CherryStudio → 设置 → MCP 服务器 → 切换到「JSON」标签页 → 粘贴并保存：
+MCP（Model Context Protocol）= 智能体的 USB 接口
 
-\`\`\`json
+把你的 AI 智能体想象成一台笔记本电脑：
+- 不插任何外设  →  只能聊天，什么实际事情都做不了
+- 插上「文件系统」U盘  →  能读写你的文件
+- 插上「网页搜索」网卡  →  能上网查最新信息
+- 插上「GitHub」工具  →  能操作代码仓库
+
+每个 MCP 服务器就像一个"外设"，装得越多，智能体能力越强。
+
+## 📋 各 MCP 服务器速查表
+
+📁 filesystem  —  读写电脑上的文件、浏览目录
+   什么时候用它：让智能体帮你改代码、写文档、整理文件
+
+🌐 fetch  —  抓取网页内容，转成纯文本
+   什么时候用它：读取 API 文档、技术博客上的信息
+
+🔍 web-search  —  实时搜索互联网
+   什么时候用它：查最新技术方案、搜实时新闻、找 Bug 解决
+   需要：搜索 API Key（Brave / Exa）
+
+🐙 github  —  创建 PR、管理 Issue、Review 代码
+   什么时候用它：需要智能体帮你管理 GitHub 项目时
+   需要：GitHub Personal Access Token
+
+🗄️ sqlite  —  查询和操作 SQLite 数据库
+   什么时候用它：遇到 .db 文件需要查数据时
+
+## ✅ 新手推荐 "起步三件套"
+
+先装这三个就够用：
+
+1. 📁 filesystem  —  读写文件（最常用）
+2. 🌐 fetch  —  抓取网页内容
+3. 🔍 web-search  —  联网搜索（需 API Key）
+
+装上后你的智能体就能：读你的代码 → 上网查资料 → 修改代码 → 保存文件
+
+## 🔧 安装方法（CherryStudio）
+
+打开 CherryStudio → 设置 → MCP 服务器：
+
+方法一：点击「添加服务器」逐个添加
+方法二：切换到「JSON」标签页，粘贴下面格式：
+
 {
   "mcpServers": {
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:\\Users\\ZEKAN\\Documents"],
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "C:\\你的工作目录"],
+      "type": "stdio",
+      "isActive": true
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
       "type": "stdio",
       "isActive": true
     },
@@ -577,27 +627,18 @@ metadata:
       "args": ["-y", "@anthropic-ai/mcp-server-sqlite", "--db-path", "./data.db"],
       "type": "stdio",
       "isActive": true
-    },
-    "fetch": {
-      "command": "npx",
-      "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
-      "type": "stdio",
-      "isActive": true
     }
   }
 }
-\`\`\`
 
-## 🔒 安全原则
-- 每个 MCP Server 只赋予最小必要权限
-- filesystem 限制在项目目录内
-- GitHub Token 使用有限 scope
-- 敏感 API Key 通过 env 字段注入</code></pre>
+## ⚠️ 安全原则
+- filesystem 的路径只给项目目录，别给整个 C 盘
+- GitHub Token 用最小权限（只读或有限 scope）
+- API Key 放环境变量里，别写死在代码中
+- 不用的服务器关掉 isActive: false</code></pre>
 	            <button class="btn-copy" onclick="copyCode('code-mcp', this)">📋 复制代码</button>
 	        </div>
-    </div>
-
-    <!-- ── ⑧ 实用技能一键部署 ── -->
+	    </div><!-- ── ⑧ 实用技能一键部署 ── -->
     <div class="interact-card">
         <div class="header">
             <span class="icon">🎯</span>
@@ -949,7 +990,11 @@ DATABASE_URL=postgresql://user:pass@localhost:5432/db
 <section>
     <h2><span class="emoji">❓</span> 常见问题</h2>
     <div class="qa-item">
-        <div class="q">🤔 生成的配置复制后发给智能体，它真的能懂吗？</div>
+        <div class="q">🔌 什么是 MCP？和 Skill（技能）有什么区别？</div>
+        <div class="a"><strong>MCP</strong> 是智能体的"外设接口"——插上文件系统就能读写文件，插上网关搜索就能上网。每个 MCP 服务器给智能体增加一个<strong>底层操作能力</strong>。<br><br><strong>Skill（技能）</strong> 是更高层的"工作流程模板"——比如"帮我写周报"这个 Skill，它可能内部调用了文件系统 MCP 来读取本周笔记，再调用模型来生成报告。<br><br>简单说：<strong>MCP = 能做什么</strong>（外设），<strong>Skill = 怎么做</strong>（工作流）。先装 MCP 再装 Skill。</div>
+	    </div>
+	    <div class="qa-item">
+	        <div class="q">🤔 生成的配置复制后发给智能体，它真的能懂吗？</div>
         <div class="a">能。智能体能读懂结构化的文本指令。把代码粘贴到对话中，它就会读取并按照配置执行。这就是"智能体之间共享配置"的原理。</div>
     </div>
     <div class="qa-item">
