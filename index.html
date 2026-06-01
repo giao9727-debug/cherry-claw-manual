@@ -532,6 +532,339 @@ metadata:
         </div>
     </div>
 
+    <!-- ── ⑦ MCP 安全配置 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🔧</span>
+            <div class="info">
+                <h3>MCP 安全配置一键部署</h3>
+                <p>让智能体获得文件读写、代码执行、搜索、Git 操作等核心能力。这是"让智能体开始自己写代码"的关键一步。</p>
+            </div>
+            <button class="btn-gen" onclick="genMcpConfig()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-mcp">
+            <pre><code id="code-mcp"># MCP 安全配置 — 请读取并安装以下工具服务
+
+## 📦 必装 MCP Server 列表
+
+### 1. 文件系统（filesystem）
+用途：安全地读写文件、管理项目目录
+```json
+{
+  "filesystem": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-filesystem", "./"],
+    "description": "安全的文件读写操作"
+  }
+}
+```
+
+### 2. Web 搜索（exa / brave-search）
+用途：联网搜索实时信息
+```json
+{
+  "web-search": {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/mcp-server-web-search"],
+    "env": { "API_KEY": "你的搜索API密钥" },
+    "description": "联网搜索最新信息"
+  }
+}
+```
+
+### 3. GitHub 集成
+用途：克隆仓库、创建 PR、管理 Issue
+```json
+{
+  "github": {
+    "command": "npx",
+    "args": ["-y", "@modelcontextprotocol/server-github"],
+    "env": { "GITHUB_TOKEN": "你的GitHub令牌" },
+    "description": "GitHub 仓库与代码管理"
+  }
+}
+```
+
+### 4. SQLite 数据库
+用途：查询和管理本地数据库
+```json
+{
+  "sqlite": {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/mcp-server-sqlite", "--db-path", "./data.db"],
+    "description": "本地数据库查询"
+  }
+}
+```
+
+### 5. 网页抓取（fetch）
+用途：读取网页内容、API 文档
+```json
+{
+  "fetch": {
+    "command": "npx",
+    "args": ["-y", "@anthropic-ai/mcp-server-fetch"],
+    "description": "抓取网页内容为 Markdown"
+  }
+}
+```
+
+## 🔒 安全原则
+- 每个 MCP Server 只赋予最小必要权限
+- filesystem 限制在项目目录内，不要给根目录权限
+- GitHub Token 使用只读或有限 scope
+- 敏感 API Key 通过环境变量注入，不写在代码里</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-mcp', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ⑧ 实用技能一键部署 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🎯</span>
+            <div class="info">
+                <h3>实用技能一键部署推荐</h3>
+                <p>从社区精选最值得安装的 Skill，让智能体立刻拥有代码审查、循环任务、定时调度等能力。</p>
+            </div>
+            <button class="btn-gen" onclick="genSkillDeploy()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-skill-deploy">
+            <pre><code id="code-skill-deploy"># 技能一键部署 — 请按顺序安装以下技能
+
+## 🏆 必装技能 TOP 5
+
+### 1. security-review 🔒
+用途：对代码变更进行安全审查
+安装：从技能市场搜索「security-review」一键安装
+价值：防止将安全问题带入生产环境
+
+### 2. simplify 🔄
+用途：审查代码质量、复用性、性能
+安装：从技能市场搜索「simplify」一键安装
+价值：自动优化代码，提升可维护性
+
+### 3. loop ⏱️
+用途：循环执行任务，监控部署状态
+安装：从技能市场搜索「loop」一键安装
+价值：让智能体自主监控长时间运行的任务
+
+### 4. schedule 📅
+用途：创建定时远程任务（Cron 调度）
+安装：从技能市场搜索「schedule」一键安装
+价值：让智能体按计划自动执行任务
+
+### 5. skill-creator 🛠️
+用途：创建和优化自定义技能
+安装：从技能市场搜索「skill-creator」一键安装
+价值：自己动手扩展智能体能力
+
+## 📥 安装命令（通用）
+1. 打开 CherryStudio → 技能市场
+2. 搜索技能名称
+3. 点击「安装」
+4. 重启智能体会话
+
+## 💡 进阶：从 Git 仓库安装
+npx skills add https://github.com/用户名/技能仓库.git -y -g</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-skill-deploy', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ⑨ 记忆系统配置 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🧠</span>
+            <div class="info">
+                <h3>记忆与持久上下文配置</h3>
+                <p>让智能体拥有长期记忆，跨会话记住你的偏好、项目信息和重要决策。</p>
+            </div>
+            <button class="btn-gen" onclick="genMemoryConfig()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-memory">
+            <pre><code id="code-memory"># 记忆系统配置 — 请读取并建立持久记忆
+
+## 📂 记忆文件体系
+
+### 1. 你是谁 — SOUL.md
+存放位置：agent 根目录
+作用：定义你的性格、语气、核心原则
+```
+> 这是我的人格定义。每次对话开始都读取它，
+> 确保我始终以一致的风格与用户交流。
+```
+
+### 2. 用户是谁 — USER.md
+作用：记录用户的偏好、时区、称呼
+```
+用户信息：
+- 称呼：[用户喜欢的称呼]
+- 语言：[中文/英文]
+- 时区：[如 Asia/Shanghai]
+- 工作习惯：[如 早上高效，下午开会多]
+```
+
+### 3. 长期知识 — FACT.md
+作用：项目配置、技术决策、常用信息
+```
+重要事实（不会频繁变化，超过6个月依然有用）：
+- 项目：xxx 使用 Python + FastAPI
+- 数据库：PostgreSQL 16
+- 部署：GitHub Actions + Docker
+```
+
+### 4. 事件日志 — JOURNAL.jsonl
+作用：记录完成的任务、出现过的错误、学到的新知识
+```
+格式：每条一行 JSON
+{"timestamp": "2026-06-01", "event": "完成xxx任务"}
+用途：搜索过去做过什么，避免重复问用户
+```
+
+## 🔧 让智能体开始记忆
+请立即：
+1. 读取我当前的工作目录
+2. 检查是否存在 SOUL.md / USER.md / FACT.md
+3. 如果不存在，根据对话自动创建
+4. 每当我提到重要信息时，主动更新 FACT.md</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-memory', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ⑩ 权限白名单配置 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🛡️</span>
+            <div class="info">
+                <h3>权限白名单与安全策略</h3>
+                <p>减少不必要的审批弹窗，让智能体高效工作，同时确保安全边界。</p>
+            </div>
+            <button class="btn-gen" onclick="genPermissionConfig()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-permission">
+            <pre><code id="code-permission"># 权限白名单配置 — 请读取并设置
+
+## ⚡ 推荐白名单策略
+
+### 1. 读取类操作（允许无审批）
+- ✅ 读取文件（已知路径）
+- ✅ 搜索文件/代码
+- ✅ 读取网页内容
+- ✅ Git log / diff / status
+- ✅ 列目录结构
+
+### 2. 常规操作（一键批准/自动允许）
+- ✅ npm/pip install 安装依赖
+- ✅ 创建/编辑非敏感文件
+- ✅ Git commit（非敏感变更）
+- ✅ 运行测试
+- ✅ 执行已知脚本
+
+### 3. 敏感操作（需审批）
+- ❌ 删除文件/目录
+- ❌ 修改 .env / 密钥文件
+- ❌ Git push --force
+- ❌ 执行 curl 发往未知域名
+- ❌ 修改系统配置
+- ❌ 安装未经验证的第三方包
+
+## 🔧 配置方法
+在 settings.json 或 settings.local.json 中：
+```json
+{
+  "permissions": {
+    "allow": [
+      "npm install",
+      "pip install",
+      "git commit",
+      "git push",
+      "read:*",
+      "search:*"
+    ],
+    "always_approve": [
+      "npm install",
+      "pip install"
+    ]
+  }
+}
+```
+
+## 💡 原则
+- 最小权限：只给完成任务所需的最小权限
+- 分层策略：读 > 写 > 删，逐级收紧
+- 定期审查：每周检查一次权限白名单</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-permission', this)">📋 复制代码</button>
+        </div>
+    </div>
+
+    <!-- ── ⑪ 环境变量与 API 密钥配置 ── -->
+    <div class="interact-card">
+        <div class="header">
+            <span class="icon">🔑</span>
+            <div class="info">
+                <h3>环境变量 & API 密钥管理</h3>
+                <p>一站式配置所有常用 API 密钥，让智能体调用各种服务时无需反复询问密钥。</p>
+            </div>
+            <button class="btn-gen" onclick="genEnvConfig()">📋 生成配置</button>
+        </div>
+        <div class="output" id="out-env">
+            <pre><code id="code-env"># 环境变量配置 — 请读取并设置以下密钥
+
+## 🌐 常用 API 配置
+
+### AI 模型 API
+```bash
+# Claude (Anthropic)
+ANTHROPIC_API_KEY=sk-ant-xxxxx
+
+# OpenAI / 兼容接口
+OPENAI_API_KEY=sk-xxxxx
+OPENAI_BASE_URL=https://api.openai.com
+
+# DeepSeek
+DEEPSEEK_API_KEY=sk-xxxxx
+
+# Google Gemini
+GEMINI_API_KEY=xxxxx
+```
+
+### 工具服务
+```bash
+# 小云雀 AI 视频创作（必填才能用视频技能）
+XYQ_ACCESS_KEY=ak-xxxxx
+
+# GitHub 令牌
+GITHUB_TOKEN=ghp_xxxxx
+
+# Web 搜索 API
+EXA_API_KEY=xxxxx
+# 或 Brave Search
+BRAVE_API_KEY=xxxxx
+
+# 数据库
+DATABASE_URL=postgresql://user:pass@localhost:5432/db
+```
+
+## 📝 配置文件格式（settings.json）
+```json
+{
+  "env": {
+    "ANTHROPIC_API_KEY": "sk-ant-xxxxx",
+    "XYQ_ACCESS_KEY": "ak-xxxxx",
+    "GITHUB_TOKEN": "ghp_xxxxx"
+  }
+}
+```
+
+## ⚠️ 安全注意事项
+- 永远不要把密钥硬编码在代码中
+- 使用 .env 文件或环境变量注入
+- .env 文件不要提交到 Git
+- 密钥泄露后立即撤销并更换
+- 不同环境（开发/生产）使用不同密钥</code></pre>
+            <button class="btn-copy" onclick="copyCode('code-env', this)">📋 复制代码</button>
+        </div>
+    </div>
+
     <div class="alert success">
         <strong>💡 使用方式：</strong>
         点击「生成配置」→ 代码出现 → 点击「复制代码」→ 打开你的智能体对话框 → <strong>粘贴发送</strong> → 智能体自动读取并配置。就是这么简单。
@@ -719,6 +1052,21 @@ function genChannelConfig() {
 
 function genSkillTemplate() {
     toggleOutput('out-skill');
+}
+function genMcpConfig() {
+    toggleOutput('out-mcp');
+}
+function genSkillDeploy() {
+    toggleOutput('out-skill-deploy');
+}
+function genMemoryConfig() {
+    toggleOutput('out-memory');
+}
+function genPermissionConfig() {
+    toggleOutput('out-permission');
+}
+function genEnvConfig() {
+    toggleOutput('out-env');
 }
 </script>
 </body>
